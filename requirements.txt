@@ -3,4 +3,4 @@ matplotlib
 tqdm
 pytest
 ipykernel
-sklearn
+scikit-learn
