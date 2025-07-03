@@ -28,6 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .
         pip install -r requirements.txt
+        pip install nbconvert nbformat
 
     # 🔧 Fix notebook kernel to avoid 'No such kernel named zero2nn'
     - name: Fix notebook kernel for GitHub Actions
@@ -41,7 +42,6 @@ jobs:
     
     - name: Run notebook smoke tests
       run: |
-        pip install nbconvert nbformat
         jupyter nbconvert --execute notebooks/micrograd_demo.ipynb --to notebook --stdout
 
     - name: ✅ Finished
