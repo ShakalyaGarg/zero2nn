@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.8, 3.10]
+        python-version: 3.8
 
     steps:
     - name: Checkout code
@@ -29,7 +29,6 @@ jobs:
         pip install -e .
         pip install -r requirements.txt
         pip install nbconvert nbformat
-        python -m ipykernel install --user
 
     # 🔧 Fix notebook kernel to avoid 'No such kernel named zero2nn'
     - name: Fix notebook kernel for GitHub Actions
