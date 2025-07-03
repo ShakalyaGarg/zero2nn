@@ -25,6 +25,16 @@ jobs:
         pip install -e .
         pip install -r requirements.txt
         pip install nbconvert nbformat
+
+    # 🔧 Fix notebook kernel to avoid 'No such kernel named zero2nn'
+    - name: Fix notebook kernel for GitHub Actions
+      run: |
+        python -c "
+        import nbformat
+        nb = nbformat.read('notebooks/micrograd_demo.ipynb', as_version=4)
+        nb['metadata']['kernelspec']['name'] = 'python3'
+        nb['metadata']['kernelspec']['display_name'] = 'Python 3'
+        nbformat.write(nb, open('notebooks/micrograd_demo.ipynb', 'w'))"
     
     - name: Run notebook smoke tests
       run: |
