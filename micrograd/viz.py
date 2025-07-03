@@ -3,6 +3,7 @@ import random
 from graphviz import Digraph
 from micrograd.engine import Value
 
+# Function to keep track of all the nodes and edges in a graph
 def trace(root):
     nodes, edges = set(), set()
     
@@ -17,6 +18,7 @@ def trace(root):
     build(root)
     return nodes, edges
 
+# Function to create a graphical representation of the expressions under consideration, often called COMPUTATION GRAPH
 def draw_dot(root):
     dot = Digraph(format = 'svg', graph_attr = {'rankdir':'LR'})
     nodes, edges = trace(root)
