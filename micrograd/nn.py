@@ -21,7 +21,7 @@ class Neuron (Module):
         
     def __call__(self, x):
         act = sum((wi * xi for wi, xi in zip(self.w, x)), self.b)
-        out = act.tanh()
+        out = act.tanh() if self.nonlin else act
         return out
 
     def parameters(self):
@@ -31,8 +31,8 @@ class Neuron (Module):
         return f"{'ReLU' if self.nonlin else 'Linear'} Neuron({len(self.w)})"
 
 class Layer (Module):
-    def __init__(self, nin, nout):
-        self.neurons = [Neuron(nin) for _ in range(nout)]
+    def __init__(self, nin, nout, **kwargs):
+        self.neurons = [Neuron(nin, **kwargs) for _ in range(nout)]
 
     def __call__(self, x):
         out = [n(x) for n in self.neurons]
@@ -47,7 +47,7 @@ class Layer (Module):
 class MLP (Module):
     def __init__(self, nin, nouts):
         sz = [nin] + nouts
-        self.layers = [Layer(sz[i], sz[i+1]) for i in range(len(nouts))]
+        self.layers = [Layer(sz[i], sz[i+1], nonlin = i!=len(nouts)-1) for i in range(len(nouts))]
 
     def __call__(self, x):
         for layer in self.layers:
